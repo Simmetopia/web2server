@@ -13,6 +13,7 @@ Desktop.ini
 *~
 
 .idea
+dist
 
 # npm
 node_modules

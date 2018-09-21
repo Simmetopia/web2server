@@ -5,15 +5,16 @@ const oneDayIsMs = 86400000;
 
 const logger = new dbSchema({
   value: String,
-  timestamp: Date
+  timestamp: Number
 });
 
 const LoggerSchema = dbModel(CollectionEnum.Logger, logger, CollectionEnum.Logger);
 
 export const last24HourLogs = () => {
-  return LoggerSchema.find().where('date').gte(Date.now() - oneDayIsMs).exec();
+  const timerDifference = Date.now() - oneDayIsMs;
+  return LoggerSchema.find().where('timestamp').gte(timerDifference).exec();
 };
 
-export const logToDatabase = (value: string) => {
-  LoggerSchema.create({ value, date: Date.now() });
+export const logToDatabase = async (value: string) => {
+  LoggerSchema.create({ value, timestamp: Date.now() });
 };

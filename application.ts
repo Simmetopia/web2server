@@ -1,8 +1,8 @@
-import { Application, Request, Response, Router } from 'express';
+import { Application, NextFunction, Request, Response, Router } from 'express';
 import { UserController } from './database/user/UserController';
 import { WorkoutController } from './database/workout/workoutController';
 import * as bodyParser from 'body-parser';
-import { last24HourLogs } from './database/logger/loggerSchema';
+import { last24HourLogs, logToDatabase } from './database/logger/loggerSchema';
 
 export class RootApplication {
 
@@ -11,8 +11,17 @@ export class RootApplication {
   };
 
   private logs = async (request: Request, response: Response) => {
-    const logs = last24HourLogs();
+    const logs = await last24HourLogs();
     response.status(200).send(logs);
+  };
+  private loggerFunction = (req: Request, _: any, next: NextFunction) => {
+    logToDatabase(JSON.stringify({
+      headers: req.headers,
+      body: req.body,
+      params: req.params,
+      reqUrl: req.url
+    }));
+    next();
   };
 
   constructor(private router: Router, private application: Application) {
@@ -30,6 +39,7 @@ export class RootApplication {
   }
 
   private initRoutes() {
+    this.router.use('*', this.loggerFunction);
     this.router.get('', this.index);
     this.router.get('/logs', this.logs);
     this.router.use('/api/v1/users', new UserController(Router()).Router);

@@ -11,17 +11,19 @@ export class RootApplication {
   };
 
   private logs = async (request: Request, response: Response) => {
-    const logs = await last24HourLogs();
-    response.status(200).send(logs);
+    last24HourLogs().subscribe((val) => {
+      response.status(200).send(val);
+    });
   };
   private loggerFunction = (req: Request, _: any, next: NextFunction) => {
-    logToDatabase(JSON.stringify({
+    logToDatabase({
       headers: req.headers,
       body: req.body,
       params: req.params,
       reqUrl: req.url
-    }));
+    }).subscribe(console.log);
     next();
+
   };
 
   constructor(private router: Router, private application: Application) {

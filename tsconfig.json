@@ -10,7 +10,8 @@
     "esModuleInterop": true,
     "alwaysStrict": true,
     "lib": ["esnext"],
-    "pretty": true
+    "pretty": true,
+    "noImplicitReturns": true
   },
   "exclude": [
     "node_modules"

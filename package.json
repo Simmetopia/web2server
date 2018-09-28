@@ -9,7 +9,8 @@
   "scripts": {
     "start": "npx ts-node-dev index.ts",
     "start:prod": "node dist/index.js",
-    "postinstall": "yarn tsc"
+    "postinstall": "yarn tsc",
+    "tsw": "tsc --watch"
   },
   "dependencies": {
     "@types/bcrypt": "^2.0.0",
@@ -30,9 +31,9 @@
     "@types/body-parser": "^1.17.0",
     "@types/express": "^4.16.0",
     "@types/luxon": "^1.2.2",
-    "@types/mongoose": "^5.2.13",
-    "@types/node": "^10.9.4",
+    "@types/mongoose": "^5.2.17",
+    "@types/node": "^10.11.2",
     "ts-node-dev": "^1.0.0-pre.30",
-    "typescript": "^3.0.3"
+    "typescript": "^3.1.1"
   }
 }

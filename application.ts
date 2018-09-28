@@ -3,6 +3,10 @@ import { UserController } from './database/user/UserController';
 import { WorkoutController } from './database/workout/workoutController';
 import * as bodyParser from 'body-parser';
 import { last24HourLogs, logToDatabase } from './database/logger/loggerSchema';
+import { UserRepository } from './repository/UserRepository';
+import { UserModel } from './database/user/userSchema';
+import { WorkoutModel } from './database/workout/workoutSchema';
+import { WorkoutRepository } from './repository/WorkoutRepository';
 
 export class RootApplication {
 
@@ -44,7 +48,7 @@ export class RootApplication {
     this.router.use('*', this.loggerFunction);
     this.router.get('', this.index);
     this.router.get('/logs', this.logs);
-    this.router.use('/api/v1/users', new UserController(Router()).Router);
-    this.router.use('/api/v1/workouts', new WorkoutController(Router()).Router);
+    this.router.use('/api/v1/users', new UserController(Router(), new UserRepository(UserModel)).Router);
+    this.router.use('/api/v1/workouts', new WorkoutController(Router(), new WorkoutRepository(WorkoutModel)).Router);
   }
 }

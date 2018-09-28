@@ -1,6 +1,6 @@
 import { Request, Response, Router } from 'express';
-import { UserModel } from './userSchema';
 import { compareSync, hashSync } from 'bcrypt';
+import { UserRepository } from '../../repository/UserRepository';
 
 interface EmailAndPassword {
   email: string;
@@ -10,32 +10,37 @@ interface EmailAndPassword {
 export class UserController {
 
   private index = async (request: Request, response: Response) => {
-    const users = await UserModel.find();
-    response.json(users);
+    this.users.findAll().subscribe(val => {
+      response.status(200).json(val);
+    });
   };
 
   private createUser = async (request: Request, response: Response) => {
     const { password, email } = request.body as EmailAndPassword;
-    try {
-      const user = await UserModel.create({ email: email, password: hashSync(password, 12) });
-      response.status(200).send(user);
+    this.users.createOne({ email: email, password: hashSync(password, 12) })
+      .subscribe(
+        val => response.status(200).send(val),
+        error => response.status(400).send(error)
+      )
+    ;
 
-    } catch (e) {
-      response.status(400).send(e);
-    }
   };
 
   private login = async (request: Request, response: Response) => {
     const { email, password } = request.body as EmailAndPassword;
-    const user = await UserModel.findOne({ email });
-    if (user && compareSync(password, user.password)) {
-      response.status(200).send(user);
-    } else {
-      response.status(400).send('unknown user or password');
-    }
+    this.users.findOne({ email }).subscribe(
+      (user) => {
+        if (user && compareSync(password, user.password)) {
+          response.status(200).send(user);
+        } else {
+          response.status(400).send('unknown user or password');
+        }
+      }
+    );
+
   };
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private users: UserRepository) {
     this.initRoutes();
   }
 

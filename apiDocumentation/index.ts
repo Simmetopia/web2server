@@ -7,6 +7,29 @@ const MD = fs.readFileSync(path.join(__dirname, '../../api_docs.md')).toString()
 const docs = converter.makeHtml(MD);
 
 
+const style = `
+<style>
+body {
+font-family: 'Open Sans', sans-serif;
+}
+
+pre {
+	box-sizing: border-box;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	overflow: auto;
+	overflow-y: hidden;
+	font-size: 12px;
+	line-height: 20px;
+	background: #efefef;
+	border: 1px solid #777;
+	color: #333;
+	font-family: 'Open Sans', sans-serif;
+}
+</style>
+`;
+
 export const html = `
 <!doctype html>
 <html lang="en">
@@ -21,6 +44,10 @@ export const html = `
   ${docs}
 </div>
   <noscript>Please enable JavaScript to continue using this application.</noscript>
-  <link type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.10.0/github-markdown.css" >
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  ${style}
+</body>
 </html>
 `;
+
+

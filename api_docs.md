@@ -14,22 +14,25 @@ Following routes is accessible:
         1. ``DELETE /:id`` find a workout and delete it
 
 
-Find the TypeSript models below: 
+Find the TypeScript models below: 
+
+Note that _id is accessible on all models!
 
 ```typescript
-export interface Workout {
-  exercises: Exercise[],
-  name: string;
-  createdBy: User
-}
-
-export interface User {
-  email: string;
-  password: string;
-}
-
-export interface Exercise {
-  description:string;
-  repetitions: number;
-  name: string;
-}
+    export interface Workout {
+      exercises: Exercise[],
+      name: string;
+      createdBy: User
+    }
+    
+    export interface User {
+      email: string;
+      password: string;
+    }
+    
+    export interface Exercise {
+      description:string;
+      repetitions: number;
+      name: string;
+    }
+```

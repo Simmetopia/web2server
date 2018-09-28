@@ -16,6 +16,7 @@
     "@types/bcrypt": "^2.0.0",
     "@types/dotenv": "^4.0.3",
     "@types/morgan": "^1.7.35",
+    "@types/showdown": "^1.7.5",
     "bcrypt": "^3.0.0",
     "body-parser": "^1.18.3",
     "circular-json": "^0.5.7",
@@ -25,7 +26,8 @@
     "mongoose": "^5.2.14",
     "morgan": "^1.9.1",
     "morgan-body": "^2.4.5",
-    "rxjs": "^6.3.3"
+    "rxjs": "^6.3.3",
+    "showdown": "^1.8.6"
   },
   "devDependencies": {
     "@types/body-parser": "^1.17.0",

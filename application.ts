@@ -7,11 +7,12 @@ import { UserRepository } from './repository/UserRepository';
 import { UserModel } from './database/user/userSchema';
 import { WorkoutModel } from './database/workout/workoutSchema';
 import { WorkoutRepository } from './repository/WorkoutRepository';
+import { html } from './apiDocumentation';
 
 export class RootApplication {
 
   private index = (request: Request, response: Response) => {
-    response.status(200).send('Api route works');
+    response.status(200).send(html);
   };
 
   private logs = async (request: Request, response: Response) => {

@@ -8,6 +8,7 @@ import { UserModel } from './database/user/userSchema';
 import { WorkoutModel } from './database/workout/workoutSchema';
 import { WorkoutRepository } from './repository/WorkoutRepository';
 import { html } from './apiDocumentation';
+import cors = require('cors');
 
 export class RootApplication {
 
@@ -41,6 +42,7 @@ export class RootApplication {
   }
 
   private initMiddleware() {
+    this.application.use(cors());
     this.application.use(bodyParser.json());
     this.application.use(bodyParser.urlencoded({ extended: false }));
   }

@@ -21,5 +21,6 @@ export const html = `
   ${docs}
 </div>
   <noscript>Please enable JavaScript to continue using this application.</noscript>
+  <link type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.10.0/github-markdown.css" >
 </html>
 `;

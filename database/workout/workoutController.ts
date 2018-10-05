@@ -16,13 +16,13 @@ export class WorkoutController {
     );
   };
 
-  private findWorkoutByName = async (request: Request, response: Response) => {
-
-    this.workouts.find({ name: request.params.name }).subscribe(
+  private findWorkoutById = async (request: Request, response: Response ) => {
+    this.workouts.findById(request.params.id).subscribe(
       workout => response.status(200).send(workout),
-      error => response.status(400).send(error)
+      error => response.status(400).send(error)      
     );
   };
+
 
   private findWorkoutByIdAndUpdate = async (request: Request, response: Response) => {
     const dataToUpdate = request.body as Workout;
@@ -51,7 +51,7 @@ export class WorkoutController {
   private initRoutes() {
     this.router.get('', this.index);
     this.router.post('', this.createWorkout);
-    this.router.get('/:name', this.findWorkoutByName);
+    this.router.get('/:id', this.findWorkoutById);
     this.router.put('/:id', this.findWorkoutByIdAndUpdate);
     this.router.delete('/:id', this.findWorkoutByIdAndDelete);
   }

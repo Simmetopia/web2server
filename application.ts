@@ -9,6 +9,7 @@ import { WorkoutModel } from './database/workout/workoutSchema';
 import { WorkoutRepository } from './repository/WorkoutRepository';
 import { html } from './apiDocumentation';
 import cors = require('cors');
+import { authenticate } from './authentication';
 
 export class RootApplication {
 
@@ -50,8 +51,8 @@ export class RootApplication {
   private initRoutes() {
     this.router.use('*', this.loggerFunction);
     this.router.get('', this.index);
-    this.router.get('/logs', this.logs);
+    this.router.get('/logs', authenticate, this.logs);
     this.router.use('/api/v1/users', new UserController(Router(), new UserRepository(UserModel)).Router);
-    this.router.use('/api/v1/workouts', new WorkoutController(Router(), new WorkoutRepository(WorkoutModel)).Router);
+    this.router.use('/api/v1/workouts', [new WorkoutController(Router(), new WorkoutRepository(WorkoutModel)).Router]);
   }
 }

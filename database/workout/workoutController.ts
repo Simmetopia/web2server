@@ -1,12 +1,14 @@
 import { Request, Response, Router } from 'express';
 import { Workout } from './workoutSchema';
 import { WorkoutRepository } from '../../repository/WorkoutRepository';
+import { authenticate } from '../../authentication';
+import { error } from 'util';
 
 
 export class WorkoutController {
 
   private index = async (request: Request, response: Response) => {
-    this.workouts.find({}).subscribe(val => response.status(200).json(val));
+    this.workouts.find({}).subscribe(val => response.status(200).json(val), error => response.status(400).send(error));
   };
 
   private createWorkout = async (request: Request, response: Response) => {
@@ -50,9 +52,9 @@ export class WorkoutController {
 
   private initRoutes() {
     this.router.get('', this.index);
-    this.router.post('', this.createWorkout);
-    this.router.get('/:name', this.findWorkoutByName);
-    this.router.put('/:id', this.findWorkoutByIdAndUpdate);
-    this.router.delete('/:id', this.findWorkoutByIdAndDelete);
+    this.router.post('', authenticate, this.createWorkout);
+    this.router.get('/:name', authenticate, this.findWorkoutByName);
+    this.router.put('/:id', authenticate, this.findWorkoutByIdAndUpdate);
+    this.router.delete('/:id', authenticate, this.findWorkoutByIdAndDelete);
   }
 }

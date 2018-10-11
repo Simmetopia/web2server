@@ -5,7 +5,16 @@ import { verify } from 'jsonwebtoken'
 import { getSecret } from "./utils/configHelper";
 
 export const authenticate = (request: Request, response: Response, next: NextFunction) => {
-    const token = request.get("Authentication");
+    const authenticationToken = request.get('Authorization');
+    if (!authenticationToken) {
+        response.status(400).json({ error: e, message: "Unauthenticated" })
+      return;
+    }
+  
+    // set the token to the token value, no matter if bearer is defined or not
+    const token = authenticationToken.search('Bearer') !== -1
+      ? authenticationToken.split(' ')[1]
+      : authenticationToken;
     try {
         if (verify(token, getSecret())) {
             next();

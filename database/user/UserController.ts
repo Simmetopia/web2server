@@ -26,7 +26,7 @@ export class UserController {
         val => {
           const dataToSend = {
             data: val,
-            token: sign(val, getSecret())
+            token: sign({sub:val._id}, getSecret())
           }
           response.status(200).json(dataToSend)
         },

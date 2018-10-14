@@ -40,9 +40,7 @@ export abstract class IRepository<T extends Document, U> implements IWrite<T, U>
     if (errors) {
       return throwError(errors);
     } else {
-      return from(this.documentModel.findOneAndUpdate({ _id: id }, data).exec()).pipe(first());
+      return from(this.documentModel.findOneAndUpdate({ _id: id }, data, { new: true }).exec()).pipe(first());
     }
   }
-
-
 }
